@@ -145,8 +145,8 @@ class TrajectoryAnalyzer():
 
     def __init__(self, marker_name):
 
-        host = rospy.get_param("datacentre_host")
-        port = rospy.get_param("datacentre_port")
+        host = rospy.get_param("mongodb_host")
+        port = rospy.get_param("mongodb_port")
 
         self._client = pymongo.MongoClient(host, port)
         self._traj = dict()
@@ -154,7 +154,8 @@ class TrajectoryAnalyzer():
         self._server = InteractiveMarkerServer(marker_name)
 
     def _retrieve_logs(self, marker_name):
-        logs = self._client.message_store.people_perception_marathon_uob.find()
+        #logs = self._client.message_store.people_perception.find()
+	logs = self._client.message_store.people_perception_morse.find()
 
         for log in logs:
             for i, uuid in enumerate(log['uuids']):
